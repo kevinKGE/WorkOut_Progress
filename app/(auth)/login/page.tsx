@@ -1,30 +1,35 @@
 'use client'
 
-import { signIn } from "next-auth/react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { useAuth } from "../../../context/AuthContext"
 
 export default function LoginPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
     const router = useRouter()
+    const { signIn } = useAuth()
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
         setError("")
+        setLoading(true)
 
-        const res = await signIn("credentials", {
-            email,
-            password,
-            redirect: false,
-        })
+        try {
+            const { error } = await signIn(email, password)
 
-        if (res?.ok) {
+            if (error) {
+                throw error
+            }
+
             router.push("/dashboard")
-        } else {
-            setError("Email ou mot de passe invalide")
+        } catch (error: any) {
+            setError(error.message || "Une erreur est survenue lors de la connexion")
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -51,9 +56,10 @@ export default function LoginPage() {
                 {error && <p className="text-red-500 text-sm">{error}</p>}
                 <button
                     type="submit"
-                    className="bg-black text-white py-2 px-4 rounded hover:bg-gray-800 transition"
+                    disabled={loading}
+                    className="bg-black text-white py-2 px-4 rounded hover:bg-gray-800 transition disabled:bg-gray-500"
                 >
-                    Se connecter
+                    {loading ? "Connexion en cours..." : "Se connecter"}
                 </button>
             </form>
             <p className="text-sm text-center">
@@ -62,7 +68,6 @@ export default function LoginPage() {
                     Créer un compte
                 </Link>
             </p>
-
         </div>
     )
 }

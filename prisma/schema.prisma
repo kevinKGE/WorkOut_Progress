@@ -40,19 +40,22 @@ model Workout {
   exercices   Exercice[]
 }
 
-model Sets {
-  repetitions    Int
-  weight         Int
+model Set {
+  id          Int      @id @default(autoincrement())
+  repetitions Int
+  weight      Int
+  exerciceId  Int
+  exercice    Exercice @relation(fields: [exerciceId], references: [id])
 }
 
 model Exercice {
-  id                     Int       @id @default(autoincrement())
-  name                   String
-  exerciceType           String
-  description            String
-  sets                   Set[]
-  rest                   Int
-  notes                  String
-  workoutId              Int
-  workout                Workout   @relation(fields: [workoutId], references: [id])
+  id           Int     @id @default(autoincrement())
+  name         String
+  exerciceType String
+  description  String
+  sets         Set[]
+  rest         Int
+  notes        String
+  workoutId    Int
+  workout      Workout @relation(fields: [workoutId], references: [id])
 }

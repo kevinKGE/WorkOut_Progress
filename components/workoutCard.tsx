@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Workout } from '../types/models/workout'
+import { format } from 'date-fns';
 
 interface WorkoutCardProps {
     workout: Workout
@@ -11,7 +12,9 @@ export default function WorkoutCard({ workout }: WorkoutCardProps) {
     return (
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 border border-gray-200 hover:shadow-lg transition-shadow">
             <h3 className="text-xl font-bold mb-2">{workout.name}</h3>
-            <p className="text-gray-600 mb-2">{new Date(workout.date).toLocaleDateString()}</p>
+            <p className="text-gray-600 mb-2">
+                {format(new Date(workout.date), 'dd/MM/yyyy')}
+            </p>
             <p className="text-sm mb-3">{workout.description}</p>
 
             <div className="mb-3">

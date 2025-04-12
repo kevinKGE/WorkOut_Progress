@@ -1,7 +1,6 @@
 import './globals.css'
-import {SessionProvider} from 'next-auth/react'
 import Header from "../components/header";
-import {AuthProvider} from "@/providers";
+import { AuthProvider } from '../context/AuthContext'
 
 export const metadata = {
     title: 'Wo Progress',
