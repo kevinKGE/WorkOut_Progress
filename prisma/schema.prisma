@@ -40,12 +40,17 @@ model Workout {
   exercices   Exercice[]
 }
 
+model Sets {
+  repetitions    Int
+  weight         Int
+}
+
 model Exercice {
   id                     Int       @id @default(autoincrement())
   name                   String
   exerciceType           String
   description            String
-  seriesRepsWithWeight   Json
+  sets                   Set[]
   rest                   Int
   notes                  String
   workoutId              Int

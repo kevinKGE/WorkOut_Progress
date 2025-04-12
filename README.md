@@ -42,7 +42,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ### prisma
 
 npx prisma studio
+### pour faire la migration à l'adresse dans .env : 
+npx prisma db push
+
+### technos :
 next.js avec react
+
+npx next dev
 
 postreSQL 
 

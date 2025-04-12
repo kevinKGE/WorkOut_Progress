@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+    transpilePackages: [
+        '@mydomain/newModule',
+    ],
 };
 
 export default nextConfig;
